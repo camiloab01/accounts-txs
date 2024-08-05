@@ -2,7 +2,7 @@ import { Container } from '@/components/container'
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-between p-24 bg-zinc-900">
+    <main className="flex items-center justify-between p-24 bg-zinc-900">
       <div className="flex flex-col gap-4 p-40">
         <Container>
           <p>
