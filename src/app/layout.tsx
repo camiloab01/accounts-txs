@@ -29,7 +29,7 @@ export default function RootLayout({
           />
         </div>
         {children}
-        <div className="absolute bottom-0 flex justify-center bg-black w-full p-5">
+        <div className="flex justify-center bg-black w-full p-5">
           Developed by Camilo Aguero Botero
         </div>
       </body>

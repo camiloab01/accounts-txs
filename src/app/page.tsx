@@ -1,10 +1,42 @@
+import { Container } from '@/components/container'
+
 export default function Home() {
   return (
     <main className="flex flex-col items-center justify-between p-24 bg-zinc-900">
-      {/* <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p> */}
+      <div className="flex flex-col gap-4 p-40">
+        <Container>
+          <p>
+            This applications uses Validation Cloud Node API and Wagmi to fetch
+            accounts and execute transactions.
+            <br />
+            <br />
+            It was build on NextJS, Typescript and Tailwind. Use the main menu
+            to navigate between the Address Lookup page and the Account page.
+          </p>
+        </Container>
+        <div className="flex gap-4">
+          <Container>
+            <p>
+              This applications uses Validation Cloud Node API and Wagmi to
+              fetch accounts and execute transactions.
+              <br />
+              <br />
+              It was build on NextJS, Typescript and Tailwind. Use the main menu
+              to navigate between the Address Lookup page and the Account page.
+            </p>
+          </Container>
+          <Container>
+            <p>
+              This applications uses Validation Cloud Node API and Wagmi to
+              fetch accounts and execute transactions.
+              <br />
+              <br />
+              It was build on NextJS, Typescript and Tailwind. Use the main menu
+              to navigate between the Address Lookup page and the Account page.
+            </p>
+          </Container>
+        </div>
+      </div>
     </main>
   )
 }
