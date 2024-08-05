@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className}`}>
         <div className="flex place-items-center gap-4 bg-red-400 p-10">
           Powered by{' '}
           <Image
