@@ -1,4 +1,5 @@
 import { Container } from '@/components/container'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -16,9 +17,10 @@ export default function Home() {
         </Container>
         <div className="flex gap-4">
           <Container>
-            <p>Search for accounts, see the transactions, etc.</p>
-            <br />
-            <p>Go to Address lookup page</p>
+            <p className="mb-8">Search for accounts, see the transactions.</p>
+            <Link className="hover:text-rose-500/70" href="/addressLookup">
+              {'-> Go to Address lookup'}
+            </Link>
           </Container>
           <Container>
             <p>
