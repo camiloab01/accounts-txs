@@ -23,11 +23,12 @@ export default function Home() {
             </Link>
           </Container>
           <Container>
-            <p>
+            <p className="mb-8">
               See popular tokens, connect your wallet and execute transactions.
             </p>
-            <br />
-            <p>Go to Account page</p>
+            <Link className="hover:text-rose-500/70" href="/account">
+              {'-> Go to Account'}
+            </Link>
           </Container>
         </div>
       </div>
