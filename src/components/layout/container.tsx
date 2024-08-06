@@ -4,7 +4,7 @@ interface IContainer {
 export const Container = (props: IContainer) => {
   const { children } = props
   return (
-    <div className="w-full justify-center border-b border-gray-300 dark:border-neutral-800  rounded-xl lg:border bg-gray-200 p-8 dark:bg-zinc-800">
+    <div className="w-full justify-center text-zinc-200 rounded-xl bg-zinc-800 p-8">
       {children}
     </div>
   )

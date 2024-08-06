@@ -26,7 +26,7 @@ export default function RootLayout({
       <body className={`${inter.className}`}>
         <WagmiProviderComp initialState={initialState}>
           <div className="flex place-items-center gap-4 bg-red-400 p-10">
-            Powered by{' '}
+            <p className="text-white">Powered by </p>
             <Image
               src="/validationCloud.png"
               alt="Validation Cloud Logo"
@@ -36,7 +36,7 @@ export default function RootLayout({
             />
           </div>
           {children}
-          <div className="flex justify-center bg-black w-full p-5">
+          <div className="flex text-zinc-200 justify-center bg-black w-full p-5">
             Developed by Camilo Aguero Botero
           </div>
         </WagmiProviderComp>

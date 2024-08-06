@@ -7,7 +7,7 @@ export default function AdressLookup() {
   return (
     <main className="flex flex-col items-center justify-between p-24 bg-zinc-900">
       <div className="flex flex-col gap-4 p-40">
-        <Link className="hover:text-rose-500/70" href="/">
+        <Link className="text-zinc-200 hover:text-rose-500/70" href="/">
           {'<- Go back'}
         </Link>
         <Container>
