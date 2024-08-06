@@ -1,9 +1,13 @@
 import { Container } from '@/components/container'
+import ConnectButton from '@/components/web3button'
 import Link from 'next/link'
 
 export default function Account() {
   return (
     <main className="flex flex-col items-center justify-between p-24 bg-zinc-900">
+      <div className="flex justify-end w-full">
+        <ConnectButton />
+      </div>
       <div className="flex flex-col gap-4 p-40">
         <Link className="hover:text-rose-500/70" href="/">
           {'<- Go back'}
