@@ -1,6 +1,8 @@
-import { Container } from '@/components/container'
-import ConnectButton from '@/components/web3button'
+import { Container } from '@/components/layout/container'
+import ConnectButton from '@/components/form/web3button'
 import Link from 'next/link'
+import Button from '@/components/form/button'
+import { AddressInput, NumberInput } from '@/components/form/input'
 
 export default function Account() {
   return (
@@ -16,24 +18,11 @@ export default function Account() {
           <div className="flex items-center gap-8 mt-4 w-[500px]">
             <div className="flex flex-col w-full gap-2">
               <p>Type account address to send funds:</p>
-              <input
-                className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-800"
-                id="address"
-                type="text"
-                placeholder="0x..."
-              ></input>
-              <input
-                className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-800"
-                id="amount"
-                type="number"
-                placeholder="2 ETH"
-              ></input>
+              <AddressInput />
+              <NumberInput />
             </div>
             <div className="flex flex-col w-1/4 gap-2">
-              <button className="bg-rose-500 hover:bg-rose-500/70 text-white font-bold rounded-full w-full h-10">
-                SEND
-              </button>
-              <></>
+              <Button text="send" />
             </div>
           </div>
         </Container>

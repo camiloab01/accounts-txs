@@ -1,4 +1,4 @@
-import { Container } from '@/components/container'
+import { Container } from '@/components/layout/container'
 import Link from 'next/link'
 
 export default function Home() {

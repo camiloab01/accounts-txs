@@ -1,4 +1,6 @@
-import { Container } from '@/components/container'
+import Button from '@/components/form/button'
+import { AddressInput } from '@/components/form/input'
+import { Container } from '@/components/layout/container'
 import Link from 'next/link'
 
 export default function AdressLookup() {
@@ -11,15 +13,8 @@ export default function AdressLookup() {
         <Container>
           <p>Type account address:</p>
           <div className="flex items-center gap-4 mt-4">
-            <input
-              className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-800"
-              id="address"
-              type="text"
-              placeholder="0x..."
-            ></input>
-            <button className="bg-rose-500 hover:bg-rose-500/70 text-white font-bold rounded-full w-full h-10">
-              SEARCH
-            </button>
+            <AddressInput />
+            <Button text="search" />
           </div>
         </Container>
         <Container>
