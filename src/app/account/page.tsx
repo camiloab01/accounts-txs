@@ -11,18 +11,21 @@ import {
   type BaseError,
   useSendTransaction,
   useWaitForTransactionReceipt,
+  useBalance,
 } from 'wagmi'
 import shortenAddress from '@/util/shortenAddress'
+import convertToEther from '@/util/convertToEther'
 
 export default function Account() {
   const [toAddress, setToAddress] = useState<string>()
   const [amount, setAmount] = useState<string>()
-  const { isConnected, chain } = useAccount()
+  const { isConnected, chain, address } = useAccount()
   const { data: hash, error, isPending, sendTransaction } = useSendTransaction()
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
       hash,
     })
+  const usersBalance = useBalance({ address })
 
   const executeTx = async () => {
     if (toAddress && amount) {
@@ -32,8 +35,6 @@ export default function Account() {
       })
     }
   }
-
-  console.log(chain?.blockExplorers)
 
   return (
     <main className="flex flex-col items-center justify-between p-24 bg-zinc-900">
@@ -72,6 +73,15 @@ export default function Account() {
                     Not a valid Etherum address
                   </p>
                 )}
+                {amount &&
+                  usersBalance.data?.value &&
+                  Number(amount) >
+                    convertToEther(
+                      usersBalance.data?.value,
+                      usersBalance.data?.decimals
+                    ) && (
+                    <p className="text-sm text-red-700">Insufficient balance</p>
+                  )}
               </div>
             </div>
             <div className="flex flex-col w-1/4 gap-2">
@@ -83,7 +93,14 @@ export default function Account() {
                   !toAddress ||
                   !amount ||
                   !isAddress(toAddress) ||
-                  isPending
+                  isPending ||
+                  !(Number(amount) > 0) ||
+                  (usersBalance.data?.value !== undefined &&
+                    Number(amount) >
+                      convertToEther(
+                        usersBalance.data?.value,
+                        usersBalance.data?.decimals
+                      ))
                 }
               >
                 {'SEND'}

@@ -7,4 +7,5 @@ const shortenAddress = (x?: string, numOfCharsAfter0x = 2) => {
   }
   return x
 }
+
 export default shortenAddress
