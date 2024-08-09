@@ -17,10 +17,14 @@ import shortenAddress from '@/util/shortenAddress'
 import convertToEther from '@/util/convertToEther'
 import getTokens from '@/data/getTokens'
 import { TokenAddress } from '@/types/tokenAddress'
+import { BaseTable } from '@/components/table/table'
+import { columns } from '@/components/table/tokensTable/columns'
+import { Token } from '@/types/token'
 
 export default function Account() {
   const [toAddress, setToAddress] = useState<string>()
   const [amount, setAmount] = useState<string>()
+  const [tokensList, setTokensList] = useState<Array<Token>>()
   const { isConnected, chain, address } = useAccount()
   const { data: hash, error, isPending, sendTransaction } = useSendTransaction()
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
@@ -39,7 +43,18 @@ export default function Account() {
   useEffect(() => {
     const fetchTokens = async () => {
       const response = await getTokens('0x1', tokensContractList)
-      console.log('tokens', response?.toJSON())
+      if (response?.toJSON()) {
+        const tokensFormatted: Token[] = response?.toJSON().map((token) => {
+          return {
+            tokenLogo: token.tokenLogo ?? '',
+            tokenName: token.tokenSymbol ?? '',
+            tokenSymbol: token.tokenSymbol ?? '',
+            priceUSD: token.usdPrice,
+            tokenAddress: token.tokenAddress ?? '',
+          }
+        })
+        setTokensList(tokensFormatted)
+      }
     }
     fetchTokens()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -155,6 +170,7 @@ export default function Account() {
         </Container>
         <Container>
           <p>Popular tokens:</p>
+          <BaseTable columns={columns} data={tokensList ? tokensList : []} />
         </Container>
       </div>
     </main>

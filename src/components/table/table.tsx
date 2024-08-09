@@ -21,7 +21,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
 }
 
-export function TransactionsTable<TData, TValue>({
+export function BaseTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {

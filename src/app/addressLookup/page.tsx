@@ -1,8 +1,8 @@
 'use client'
 
 import { Container } from '@/components/layout/container'
+import { BaseTable } from '@/components/table/table'
 import { columns } from '@/components/table/transactionsTable/columns'
-import { TransactionsTable } from '@/components/table/transactionsTable/table'
 import getAccountTransactions from '@/data/getAccountTransactions'
 import convertToEther from '@/util/convertToEther'
 import {
@@ -98,7 +98,7 @@ export default function AdressLookup() {
         <Container>
           <p>Recent account&apos;s transactions:</p>
           {accountTransactions && (
-            <TransactionsTable columns={columns} data={accountTransactions} />
+            <BaseTable columns={columns} data={accountTransactions} />
           )}
         </Container>
       </div>
