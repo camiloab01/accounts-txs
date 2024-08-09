@@ -7,7 +7,7 @@ import { AssetTransfersResult } from 'alchemy-sdk'
 export const columns: ColumnDef<AssetTransfersResult>[] = [
   {
     accessorKey: 'hash',
-    header: 'Hash',
+    header: () => <div className="text-left text-white">Hash</div>,
     cell: ({ row }) => {
       return (
         <div className="text-sm">{shortenAddress(row.getValue('hash'))}</div>
@@ -16,7 +16,7 @@ export const columns: ColumnDef<AssetTransfersResult>[] = [
   },
   {
     accessorKey: 'value',
-    header: 'Amount',
+    header: () => <div className="text-left text-white">Amount</div>,
     cell: ({ row }) => {
       return (
         <div className="text-sm flex">
@@ -27,7 +27,7 @@ export const columns: ColumnDef<AssetTransfersResult>[] = [
   },
   {
     accessorKey: 'from',
-    header: 'Sender',
+    header: () => <div className="text-left text-white">Sender</div>,
     cell: ({ row }) => {
       return (
         <div className="text-sm">{shortenAddress(row.getValue('from'))}</div>
@@ -36,14 +36,14 @@ export const columns: ColumnDef<AssetTransfersResult>[] = [
   },
   {
     accessorKey: 'to',
-    header: 'Receiver',
+    header: () => <div className="text-left text-white">Receiver</div>,
     cell: ({ row }) => {
       return <div className="text-sm">{shortenAddress(row.getValue('to'))}</div>
     },
   },
   {
     accessorKey: 'blockNum',
-    header: 'Block Number',
+    header: () => <div className="text-right text-white">Block Number</div>,
     cell: ({ row }) => {
       return (
         <div className="text-sm text-right">

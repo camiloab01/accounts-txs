@@ -32,7 +32,7 @@ export function TransactionsTable<TData, TValue>({
   })
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md mt-4">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
