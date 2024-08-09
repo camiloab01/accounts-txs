@@ -1,9 +1,16 @@
 'use client'
 
 import { Container } from '@/components/layout/container'
+import { columns } from '@/components/table/transactionsTable/columns'
+import { TransactionsTable } from '@/components/table/transactionsTable/table'
 import getAccountTransactions from '@/data/getAccountTransactions'
 import convertToEther from '@/util/convertToEther'
-import { Alchemy, AlchemySubscription, Network } from 'alchemy-sdk'
+import {
+  Alchemy,
+  AlchemySubscription,
+  AssetTransfersResult,
+  Network,
+} from 'alchemy-sdk'
 import Link from 'next/link'
 import { useState } from 'react'
 import { isAddress } from 'viem'
@@ -11,12 +18,15 @@ import { useBalance } from 'wagmi'
 
 export default function AdressLookup() {
   const [address, setAddress] = useState<`0x${string}`>()
+  const [accountTransactions, setAccountTransactions] =
+    useState<Array<AssetTransfersResult>>()
   const usersBalance = useBalance({ address })
 
   const searchAddress = async () => {
     if (address) {
-      const transactions = await getAccountTransactions(address)
-      console.log(transactions)
+      const accountTransactionsResponse = await getAccountTransactions(address)
+      setAccountTransactions(accountTransactionsResponse.transfers)
+      console.log(accountTransactionsResponse.transfers)
       newTransactionsListener()
     }
   }
@@ -43,8 +53,6 @@ export default function AdressLookup() {
       (tx) => console.log(tx)
     )
   }
-
-  console.log('balance', usersBalance.data?.value)
 
   return (
     <main className="flex flex-col items-center justify-between p-24 bg-zinc-900">
@@ -89,6 +97,9 @@ export default function AdressLookup() {
         </Container>
         <Container>
           <p>Recent account&apos;s transactions:</p>
+          {accountTransactions && (
+            <TransactionsTable columns={columns} data={accountTransactions} />
+          )}
         </Container>
       </div>
     </main>
