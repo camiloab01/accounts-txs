@@ -72,7 +72,9 @@ export default function AdressLookup() {
             </button>
           </div>
           {address && !isAddress(address) && (
-            <p className="text-sm text-red-700">Not a valid Etherum address</p>
+            <p className="text-sm text-red-700 mt-4">
+              Not a valid Etherum address
+            </p>
           )}
           {address && isAddress(address) && (
             <p className="text-sm text-white mt-4">
