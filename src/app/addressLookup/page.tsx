@@ -4,13 +4,9 @@ import { Container } from '@/components/layout/container'
 import { BaseTable } from '@/components/table/table'
 import { columns } from '@/components/table/transactionsTable/columns'
 import getAccountTransactions from '@/data/getAccountTransactions'
+import { Transaction } from '@/types/transaction'
 import convertToEther from '@/util/convertToEther'
-import {
-  Alchemy,
-  AlchemySubscription,
-  AssetTransfersResult,
-  Network,
-} from 'alchemy-sdk'
+import { Alchemy, AlchemySubscription, Network } from 'alchemy-sdk'
 import Link from 'next/link'
 import { useState } from 'react'
 import { isAddress } from 'viem'
@@ -19,14 +15,25 @@ import { useBalance } from 'wagmi'
 export default function AdressLookup() {
   const [address, setAddress] = useState<`0x${string}`>()
   const [accountTransactions, setAccountTransactions] =
-    useState<Array<AssetTransfersResult>>()
+    useState<Array<Transaction>>()
   const usersBalance = useBalance({ address })
 
   const searchAddress = async () => {
     if (address) {
       const accountTransactionsResponse = await getAccountTransactions(address)
-      setAccountTransactions(accountTransactionsResponse.transfers)
       console.log(accountTransactionsResponse.transfers)
+      const transactionsFormatted: Transaction[] =
+        accountTransactionsResponse.transfers.map((transfer) => {
+          return {
+            hash: transfer.hash,
+            amount: transfer.value ?? 0,
+            assetSymbol: transfer.asset ?? '',
+            sender: transfer.from,
+            receiver: transfer.to ?? '',
+            blockNumber: transfer.blockNum,
+          }
+        })
+      setAccountTransactions(transactionsFormatted)
       newTransactionsListener()
     }
   }
@@ -50,7 +57,18 @@ export default function AdressLookup() {
         ],
         includeRemoved: true,
       },
-      (tx) => console.log(tx)
+      (tx) => {
+        const transaction: Transaction = {
+          hash: tx.transaction.hash,
+          amount: Number(tx.transaction.value),
+          sender: tx.transaction.from,
+          receiver: tx.transaction.to,
+          blockNumber: tx.transaction.blockNumber,
+        }
+        accountTransactions
+          ? setAccountTransactions([...accountTransactions, transaction])
+          : setAccountTransactions([transaction])
+      }
     )
   }
 

@@ -1,10 +1,10 @@
 'use client'
 
+import { Transaction } from '@/types/transaction'
 import shortenAddress from '@/util/shortenAddress'
 import { ColumnDef } from '@tanstack/react-table'
-import { AssetTransfersResult } from 'alchemy-sdk'
 
-export const columns: ColumnDef<AssetTransfersResult>[] = [
+export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: 'hash',
     header: () => <div className="text-left text-white">Hash</div>,
@@ -15,39 +15,43 @@ export const columns: ColumnDef<AssetTransfersResult>[] = [
     },
   },
   {
-    accessorKey: 'value',
+    accessorKey: 'amount',
     header: () => <div className="text-left text-white">Amount</div>,
     cell: ({ row }) => {
       return (
         <div className="text-sm flex">
-          {`${(row.getValue('value') as string).toLocaleString()} ETH`}
+          {`${(row.getValue('amount') as string).toLocaleString()} ETH`}
         </div>
       )
     },
   },
   {
-    accessorKey: 'from',
+    accessorKey: 'sender',
     header: () => <div className="text-left text-white">Sender</div>,
     cell: ({ row }) => {
       return (
-        <div className="text-sm">{shortenAddress(row.getValue('from'))}</div>
+        <div className="text-sm">{shortenAddress(row.getValue('sender'))}</div>
       )
     },
   },
   {
-    accessorKey: 'to',
+    accessorKey: 'receiver',
     header: () => <div className="text-left text-white">Receiver</div>,
     cell: ({ row }) => {
-      return <div className="text-sm">{shortenAddress(row.getValue('to'))}</div>
+      return (
+        <div className="text-sm">
+          {shortenAddress(row.getValue('receiver'))}
+        </div>
+      )
     },
   },
   {
-    accessorKey: 'blockNum',
+    accessorKey: 'blockNumber',
     header: () => <div className="text-right text-white">Block Number</div>,
     cell: ({ row }) => {
       return (
         <div className="text-sm text-right">
-          {Number(row.getValue('blockNum'))}
+          {Number(row.getValue('blockNumber'))}
         </div>
       )
     },
