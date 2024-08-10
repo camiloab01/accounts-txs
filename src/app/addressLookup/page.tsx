@@ -21,7 +21,6 @@ export default function AdressLookup() {
   const searchAddress = async () => {
     if (address) {
       const accountTransactionsResponse = await getAccountTransactions(address)
-      console.log(accountTransactionsResponse.transfers)
       const transactionsFormatted: Transaction[] =
         accountTransactionsResponse.transfers.map((transfer) => {
           return {
@@ -42,7 +41,7 @@ export default function AdressLookup() {
     () => {
       if (!address || !isAddress(address)) return
       const config = {
-        apiKey: '1VewTipkrY4bYqgH4BboxtRqa7thKT0E',
+        apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
         network: Network.ETH_SEPOLIA,
       }
       const alchemy = new Alchemy(config)

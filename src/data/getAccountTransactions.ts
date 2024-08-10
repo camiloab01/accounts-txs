@@ -2,7 +2,7 @@ import { Alchemy, AssetTransfersCategory, Network } from 'alchemy-sdk'
 
 const getAccountTransactions = async (account: string) => {
   const config = {
-    apiKey: '1VewTipkrY4bYqgH4BboxtRqa7thKT0E',
+    apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
     network: Network.ETH_SEPOLIA,
   }
   const alchemy = new Alchemy(config)
