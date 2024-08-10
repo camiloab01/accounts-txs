@@ -1,14 +1,13 @@
 'use client'
 
 import { Container } from '@/components/layout/container'
-import { BaseTable } from '@/components/table/table'
-import { columns } from '@/components/table/transactionsTable/columns'
+import { TransactionsTable } from '@/components/table/transactionsTable/transactionsTable'
 import getAccountTransactions from '@/data/getAccountTransactions'
 import { Transaction } from '@/types/transaction'
 import convertToEther from '@/util/convertToEther'
 import { Alchemy, AlchemySubscription, Network } from 'alchemy-sdk'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { isAddress } from 'viem'
 import { useBalance } from 'wagmi'
 
@@ -16,6 +15,7 @@ export default function AdressLookup() {
   const [address, setAddress] = useState<`0x${string}`>()
   const [accountTransactions, setAccountTransactions] =
     useState<Array<Transaction>>()
+  const [newTransaction, setNewTransaction] = useState<Transaction>()
   const usersBalance = useBalance({ address })
 
   const searchAddress = async () => {
@@ -34,43 +34,52 @@ export default function AdressLookup() {
           }
         })
       setAccountTransactions(transactionsFormatted)
-      newTransactionsListener()
+      // newTransactionsListener()
     }
   }
 
-  const newTransactionsListener = () => {
-    if (!address) return
-
-    const config = {
-      apiKey: '1VewTipkrY4bYqgH4BboxtRqa7thKT0E',
-      network: Network.ETH_SEPOLIA,
-    }
-    const alchemy = new Alchemy(config)
-
-    alchemy.ws.on(
-      {
-        method: AlchemySubscription.MINED_TRANSACTIONS,
-        addresses: [
-          {
-            from: address,
-          },
-        ],
-        includeRemoved: true,
-      },
-      (tx) => {
-        const transaction: Transaction = {
-          hash: tx.transaction.hash,
-          amount: Number(tx.transaction.value),
-          sender: tx.transaction.from,
-          receiver: tx.transaction.to,
-          blockNumber: tx.transaction.blockNumber,
-        }
-        accountTransactions
-          ? setAccountTransactions([...accountTransactions, transaction])
-          : setAccountTransactions([transaction])
+  useEffect(
+    () => {
+      if (!address || !isAddress(address)) return
+      const config = {
+        apiKey: '1VewTipkrY4bYqgH4BboxtRqa7thKT0E',
+        network: Network.ETH_SEPOLIA,
       }
-    )
-  }
+      const alchemy = new Alchemy(config)
+
+      alchemy.ws.on(
+        {
+          method: AlchemySubscription.MINED_TRANSACTIONS,
+          addresses: [
+            {
+              from: address,
+            },
+          ],
+          includeRemoved: true,
+        },
+        (tx) => {
+          const transaction: Transaction = {
+            hash: tx.transaction.hash,
+            amount: Number(tx.transaction.value) / Math.pow(10, 18),
+            sender: tx.transaction.from,
+            receiver: tx.transaction.to,
+            blockNumber: tx.transaction.blockNumber,
+          }
+          setNewTransaction(transaction)
+        }
+      )
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [address]
+  )
+
+  useEffect(() => {
+    if (!newTransaction) return
+    accountTransactions
+      ? setAccountTransactions([newTransaction, ...accountTransactions])
+      : setAccountTransactions([newTransaction])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newTransaction])
 
   return (
     <main className="flex flex-col items-center justify-between p-24 bg-zinc-900">
@@ -116,7 +125,7 @@ export default function AdressLookup() {
         <Container>
           <p>Recent account&apos;s transactions:</p>
           {accountTransactions && (
-            <BaseTable columns={columns} data={accountTransactions} />
+            <TransactionsTable transactionsData={accountTransactions} />
           )}
         </Container>
       </div>
