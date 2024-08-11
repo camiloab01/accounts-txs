@@ -13,7 +13,6 @@ import { Transaction } from '@/types/transaction'
 import shortenAddress from '@/util/shortenAddress'
 import { ExternalLinkIcon } from '@radix-ui/react-icons'
 import {
-  ColumnDef,
   flexRender,
   getPaginationRowModel,
   useReactTable,
@@ -35,7 +34,9 @@ export const TransactionsTable = ({
         header: () => <div className="text-left text-white">Hash</div>,
         cell: ({ row }) => {
           return (
-            <div className="text-sm">
+            <div
+              className={`text-sm ${row.index === 0 ? 'animate-pulse-start' : ''}`}
+            >
               {shortenAddress(row.getValue('hash'))}
             </div>
           )
@@ -46,7 +47,9 @@ export const TransactionsTable = ({
         header: () => <div className="text-left text-white">Amount</div>,
         cell: ({ row }) => {
           return (
-            <div className="text-sm flex">
+            <div
+              className={`text-sm ${row.index === 0 ? 'animate-pulse-start' : ''}`}
+            >
               {`${(row.getValue('amount') as string).toLocaleString()} ETH`}
             </div>
           )
@@ -57,7 +60,9 @@ export const TransactionsTable = ({
         header: () => <div className="text-left text-white">Sender</div>,
         cell: ({ row }) => {
           return (
-            <div className="text-sm">
+            <div
+              className={`text-sm ${row.index === 0 ? 'animate-pulse-start' : ' '}`}
+            >
               {shortenAddress(row.getValue('sender'))}
             </div>
           )
@@ -68,7 +73,9 @@ export const TransactionsTable = ({
         header: () => <div className="text-left text-white">Receiver</div>,
         cell: ({ row }) => {
           return (
-            <div className="text-sm">
+            <div
+              className={`text-sm ${row.index === 0 ? 'animate-pulse-start' : ''}`}
+            >
               {shortenAddress(row.getValue('receiver'))}
             </div>
           )
@@ -79,7 +86,9 @@ export const TransactionsTable = ({
         header: () => <div className="text-right text-white"></div>,
         cell: ({ row }) => {
           return (
-            <div className="flex justify-end text-indigo-500 hover:text-white hover:cursor-pointer">
+            <div
+              className={`flex justify-end text-indigo-500 hover:text-white hover:cursor-pointer ${row.index === 0 ? 'animate-pulse-start' : ''}`}
+            >
               <a
                 href={`https://sepolia.etherscan.io/tx/${row.getValue('hash')}`}
                 target="_blank"
