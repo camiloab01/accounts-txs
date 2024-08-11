@@ -76,7 +76,7 @@ export default function Account() {
         <ConnectButton />
       </div>
       <div className="flex flex-col gap-4 p-40">
-        <Link className="text-zinc-200 hover:text-rose-500/70" href="/">
+        <Link className="text-zinc-200 hover:text-rose-500" href="/">
           {'<- Go back'}
         </Link>
         <Container>

@@ -18,7 +18,7 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row lg:w-1/2 md:w-1/2 gap-4 mx-auto">
           <Container>
             <p className="mb-8">Search for accounts, see the transactions.</p>
-            <Link className="hover:text-rose-500/70" href="/addressLookup">
+            <Link className="hover:text-rose-500" href="/addressLookup">
               {'-> Go to Address lookup'}
             </Link>
           </Container>
@@ -26,7 +26,7 @@ export default function Home() {
             <p className="mb-8">
               See popular tokens, connect your wallet and execute transactions.
             </p>
-            <Link className="hover:text-rose-500/70" href="/account">
+            <Link className="hover:text-rose-500" href="/account">
               {'-> Go to Account'}
             </Link>
           </Container>

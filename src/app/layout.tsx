@@ -44,14 +44,14 @@ export default function RootLayout({
               target="_blank"
             >
               <LinkedInLogoIcon
-                className="text-indigo-500 hover:text-rose-500 align-center cursor-pointer"
+                className="text-rose-500 hover:text-indigo-500 align-center cursor-pointer"
                 width={25}
                 height={25}
               />
             </a>
             <a href="https://github.com/camiloab01" target="_blank">
               <GitHubLogoIcon
-                className="text-indigo-500 hover:text-rose-500 align-center cursor-pointer"
+                className="text-rose-500 hover:text-indigo-500 align-center cursor-pointer"
                 width={25}
                 height={25}
               />
