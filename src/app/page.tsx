@@ -3,8 +3,8 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <main className="h-screen p-24 bg-zinc-900">
-      <div className="flex flex-col mt-36 gap-4">
+    <main className="h-full p-10 bg-zinc-900">
+      <div className="flex flex-col gap-4">
         <Container style="md:w-1/2 sm:my-0 sm:mx-auto">
           <p>
             This applications uses Validation Cloud Node API and Wagmi to fetch

@@ -20,6 +20,7 @@ import { TokenAddress } from '@/types/tokenAddress'
 import { BaseTable } from '@/components/table/table'
 import { columns } from '@/components/table/tokensTable/columns'
 import { Token } from '@/types/token'
+import { ExternalLinkIcon } from '@radix-ui/react-icons'
 
 export default function Account() {
   const [toAddress, setToAddress] = useState<string>()
@@ -70,105 +71,115 @@ export default function Account() {
   }
 
   return (
-    <main className="flex flex-col items-center justify-between p-24 bg-zinc-900">
-      <div className="flex gap-4 justify-end w-full">
-        <ChainDropDown />
-        <ConnectButton />
-      </div>
-      <div className="flex flex-col gap-4 p-40">
-        <Link className="text-zinc-200 hover:text-rose-500" href="/">
-          {'<- Go back'}
-        </Link>
-        <Container>
-          <div className="flex items-center gap-8 mt-4 w-[500px]">
-            <div className="flex flex-col w-full gap-2">
+    <main className="h-full p-10 bg-zinc-900">
+      <div className="flex flex-col gap-6">
+        <div className="flex gap-4 justify-end w-full md:px-14">
+          <ChainDropDown />
+          <ConnectButton />
+        </div>
+        <div className="md:w-1/2 sm:my-0 sm:mx-auto">
+          <Link className="text-zinc-200 hover:text-rose-500" href="/">
+            {'<- Go back'}
+          </Link>
+          <Container>
+            <div className="flex flex-col gap-2">
               <p>Type account address to send funds:</p>
-              <input
-                className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-800"
-                id="address"
-                type="text"
-                placeholder="0x..."
-                value={toAddress}
-                onChange={(e) => setToAddress(e.target.value)}
-              ></input>
-              <input
-                className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-800"
-                id="amount"
-                type="number"
-                placeholder="2 ETH"
-                min={0}
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              ></input>
-              <div>
-                {toAddress && !isAddress(toAddress) && (
-                  <p className="text-sm text-red-700">
-                    Not a valid Etherum address
-                  </p>
-                )}
-                {amount &&
-                  usersBalance.data?.value &&
-                  Number(amount) >
-                    convertToEther(
-                      usersBalance.data?.value,
-                      usersBalance.data?.decimals
-                    ) && (
-                    <p className="text-sm text-red-700">Insufficient balance</p>
+              <div className="flex flex-col sm:flex-row">
+                <div className="flex flex-col sm:w-1/2 gap-4">
+                  <input
+                    className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-800"
+                    id="address"
+                    type="text"
+                    placeholder="0x..."
+                    value={toAddress}
+                    onChange={(e) => setToAddress(e.target.value)}
+                  ></input>
+                  <input
+                    className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-800"
+                    id="amount"
+                    type="number"
+                    placeholder="2 ETH"
+                    min={0}
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                  ></input>
+                  <div>
+                    {toAddress && !isAddress(toAddress) && (
+                      <p className="text-sm text-red-700">
+                        Not a valid Etherum address
+                      </p>
+                    )}
+                    {amount &&
+                      usersBalance.data?.value &&
+                      Number(amount) >
+                        convertToEther(
+                          usersBalance.data?.value,
+                          usersBalance.data?.decimals
+                        ) && (
+                        <p className="text-sm text-red-700">
+                          Insufficient balance
+                        </p>
+                      )}
+                  </div>
+                </div>
+                <div className="flex flex-col sm:w-1/2 gap-4">
+                  <button
+                    className="bg-rose-500 hover:bg-rose-500/70 disabled:bg-rose-500/70 text-white font-bold rounded-full h-10 w-1/2 m-auto"
+                    onClick={executeTx}
+                    disabled={
+                      !isConnected ||
+                      !toAddress ||
+                      !amount ||
+                      !isAddress(toAddress) ||
+                      isPending ||
+                      !(Number(amount) > 0) ||
+                      (usersBalance.data?.value !== undefined &&
+                        Number(amount) >
+                          convertToEther(
+                            usersBalance.data?.value,
+                            usersBalance.data?.decimals
+                          ))
+                    }
+                  >
+                    {'SEND'}
+                  </button>
+                  {isPending && (
+                    <p className="text-sm text-green-700 text-center">
+                      executing transaction...
+                    </p>
                   )}
+                  {isConfirmed && (
+                    <p className="text-sm text-green-700 text-center">
+                      Transaction confirmed.
+                    </p>
+                  )}
+                  {hash && !isConfirming && (
+                    <a
+                      href={`${chain?.blockExplorers?.default.url}/tx/${hash}`}
+                      target="_blank"
+                      className="flex justify-center items-center text-sm hover:text-rose-700 text-green-700 gap-1"
+                    >
+                      Transaction hash: {shortenAddress(hash)}
+                      <ExternalLinkIcon />
+                    </a>
+                  )}
+                  {isConfirming && (
+                    <p className="text-sm text-green-700 text-center">
+                      Waiting for confirmation...
+                    </p>
+                  )}
+                  {error && (
+                    <p className="text-sm text-red-700 text-center">
+                      Error:{' '}
+                      {(error as BaseError).shortMessage || error.message}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
-            <div className="flex flex-col w-1/4 gap-2">
-              <button
-                className="bg-rose-500 hover:bg-rose-500/70 disabled:bg-rose-500/70 text-white font-bold rounded-full w-full h-10"
-                onClick={executeTx}
-                disabled={
-                  !isConnected ||
-                  !toAddress ||
-                  !amount ||
-                  !isAddress(toAddress) ||
-                  isPending ||
-                  !(Number(amount) > 0) ||
-                  (usersBalance.data?.value !== undefined &&
-                    Number(amount) >
-                      convertToEther(
-                        usersBalance.data?.value,
-                        usersBalance.data?.decimals
-                      ))
-                }
-              >
-                {'SEND'}
-              </button>
-              {isPending && (
-                <p className="text-sm text-green-700">
-                  ... executing transaction
-                </p>
-              )}
-              {isConfirmed && (
-                <p className="text-sm text-green-700">Transaction confirmed.</p>
-              )}
-              {hash && !isConfirming && (
-                <a
-                  href={`${chain?.blockExplorers?.default.url}/tx/${hash}`}
-                  target="_blank"
-                  className="text-sm hover:text-green-700/70 text-green-700"
-                >
-                  Transaction hash: {shortenAddress(hash)}
-                </a>
-              )}
-              {isConfirming && (
-                <p className="text-sm text-green-700">
-                  Waiting for confirmation...
-                </p>
-              )}
-              {error && (
-                <p className="text-sm text-red-700">
-                  Error: {(error as BaseError).shortMessage || error.message}
-                </p>
-              )}
-            </div>
-          </div>
-        </Container>
-        <Container>
+          </Container>
+        </div>
+        <Container style="md:w-1/2 sm:my-0 sm:mx-auto">
           <p>Popular tokens:</p>
           <BaseTable columns={columns} data={tokensList ? tokensList : []} />
         </Container>
