@@ -3,7 +3,7 @@ import { cookieStorage, createStorage } from 'wagmi'
 import { sepolia, mainnet } from 'wagmi/chains'
 
 //TODO: Move to an ENV file
-export const projectId = 'ce53c2d46ecc44e11d54b6277c2685b1'
+export const projectId = process.env.NEXT_PUBLIC_WALLECTCONNECT_KEY
 
 const metadata = {
   name: 'Accounts and Txs',
@@ -14,7 +14,7 @@ const metadata = {
 
 export const config = defaultWagmiConfig({
   chains: [sepolia, mainnet],
-  projectId,
+  projectId: projectId ?? '',
   metadata,
   ssr: true,
   storage: createStorage({

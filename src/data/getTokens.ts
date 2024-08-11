@@ -4,7 +4,6 @@ import { TokenAddress } from '../types/tokenAddress'
 const getTokens = async (chain: string, tokens: Array<TokenAddress>) => {
   try {
     if (!Moralis.Core.isStarted) {
-      //TODO: Move API KEY to Env
       await Moralis.start({
         apiKey: process.env.NEXT_PUBLIC_MORALIS_API_KEY,
       })
