@@ -48,7 +48,7 @@ export const TransactionsTable = ({
         cell: ({ row }) => {
           return (
             <div
-              className={`text-sm ${row.index === 0 ? 'animate-pulse-start' : ''}`}
+              className={`text-sm ${row.index === 0 ? 'animate-pulse-start' : ''} `}
             >
               {`${(row.getValue('amount') as string).toLocaleString()} ETH`}
             </div>
@@ -61,7 +61,7 @@ export const TransactionsTable = ({
         cell: ({ row }) => {
           return (
             <div
-              className={`text-sm ${row.index === 0 ? 'animate-pulse-start' : ' '}`}
+              className={`${row.index === 0 ? 'animate-pulse-start' : ''} text-sm`}
             >
               {shortenAddress(row.getValue('sender'))}
             </div>
@@ -87,7 +87,7 @@ export const TransactionsTable = ({
         cell: ({ row }) => {
           return (
             <div
-              className={`flex justify-end text-indigo-500 hover:text-white hover:cursor-pointer ${row.index === 0 ? 'animate-pulse-start' : ''}`}
+              className={`flex ${row.index === 0 ? 'animate-pulse-start' : ''} justify-end text-indigo-500 hover:text-white hover:cursor-pointer`}
             >
               <a
                 href={`https://sepolia.etherscan.io/tx/${row.getValue('hash')}`}
