@@ -25,8 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-zinc-900`}>
         <WagmiProviderComp initialState={initialState}>
-          <div className="flex place-items-center gap-4 bg-red-400 p-10">
-            <p className="text-white">Powered by </p>
+          <div className="flex flex-col place-items-center gap-2 bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-600 p-5">
             <Image
               src="/validationCloud.png"
               alt="Validation Cloud Logo"
@@ -34,6 +33,7 @@ export default function RootLayout({
               height={300}
               priority
             />
+            <p className="text-white text-xl font-semibold">CHALLENGE 🎯</p>
           </div>
           {children}
           <div className="flex text-zinc-200 justify-center bg-black w-full p-5">
