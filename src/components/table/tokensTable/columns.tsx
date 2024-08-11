@@ -3,8 +3,26 @@
 import { Token } from '@/types/token'
 import shortenAddress from '@/util/shortenAddress'
 import { ColumnDef } from '@tanstack/react-table'
+import { ExternalLinkIcon } from '@radix-ui/react-icons'
+import Image from 'next/image'
 
 export const columns: ColumnDef<Token>[] = [
+  {
+    accessorKey: 'tokenLogo',
+    header: () => <div className="text-left text-white"></div>,
+    cell: ({ row }) => {
+      return (
+        <div>
+          <Image
+            width={20}
+            height={20}
+            src={row.getValue('tokenLogo')}
+            alt="token logo"
+          ></Image>
+        </div>
+      )
+    },
+  },
   {
     accessorKey: 'tokenName',
     header: () => <div className="text-left text-white">Name</div>,
@@ -37,6 +55,22 @@ export const columns: ColumnDef<Token>[] = [
       return (
         <div className="text-right text-sm">
           {(row.getValue('priceUSD') as Number).toLocaleString()}
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: 'tokenAddress',
+    header: () => <div className="text-right text-white"></div>,
+    cell: ({ row }) => {
+      return (
+        <div className="flex justify-end text-indigo-500 hover:text-white hover:cursor-pointer">
+          <a
+            href={`https://etherscan.io/token/${row.getValue('tokenAddress')}`}
+            target="_blank"
+          >
+            <ExternalLinkIcon />
+          </a>
         </div>
       )
     },
