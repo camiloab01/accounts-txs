@@ -23,7 +23,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>
+      <body className={`${inter.className} bg-zinc-900`}>
         <WagmiProviderComp initialState={initialState}>
           <div className="flex place-items-center gap-4 bg-red-400 p-10">
             <p className="text-white">Powered by </p>
