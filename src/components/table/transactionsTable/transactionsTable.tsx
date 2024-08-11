@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/table'
 import { Transaction } from '@/types/transaction'
 import shortenAddress from '@/util/shortenAddress'
+import { ExternalLinkIcon } from '@radix-ui/react-icons'
 import {
   ColumnDef,
   flexRender,
@@ -74,12 +75,17 @@ export const TransactionsTable = ({
         },
       }),
       columnHelper.accessor((x) => x.blockNumber, {
-        id: 'blockNumber',
-        header: () => <div className="text-right text-white">blockNumber</div>,
+        id: 'hash',
+        header: () => <div className="text-right text-white"></div>,
         cell: ({ row }) => {
           return (
-            <div className="text-sm">
-              {shortenAddress(row.getValue('blockNumber'))}
+            <div className="flex justify-end text-indigo-500 hover:text-white hover:cursor-pointer">
+              <a
+                href={`https://sepolia.etherscan.io/tx/${row.getValue('hash')}`}
+                target="_blank"
+              >
+                <ExternalLinkIcon />
+              </a>
             </div>
           )
         },
