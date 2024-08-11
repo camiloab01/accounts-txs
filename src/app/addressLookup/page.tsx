@@ -2,6 +2,8 @@
 
 import { Container } from '@/components/layout/container'
 import { TransactionsTable } from '@/components/table/transactionsTable'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import getAccountTransactions from '@/data/getAccountTransactions'
 import { Transaction } from '@/types/transaction'
 import convertToEther from '@/util/convertToEther'
@@ -90,21 +92,22 @@ export default function AdressLookup() {
           <Container>
             <p>Type account address:</p>
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
-              <input
-                className="shadow appearance-none rounded md:w-1/2 w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-800"
+              <Input
+                className="rounded w-full py-2 px-3 text-white text-md"
                 id="address"
                 type="text"
                 placeholder="0x..."
                 value={address}
                 onChange={(e) => setAddress(e.target.value as `0x${string}`)}
-              ></input>
-              <button
+                autoComplete="off"
+              />
+              <Button
                 className="bg-rose-500 hover:bg-rose-500/70 disabled:bg-rose-500/70 text-white font-bold rounded-full w-full md:w-1/4 h-10"
                 onClick={searchAddress}
                 disabled={!address || !isAddress(address)}
               >
                 {'SEARCH'}
-              </button>
+              </Button>
             </div>
             {address && !isAddress(address) && (
               <p className="text-sm text-red-700 mt-4">

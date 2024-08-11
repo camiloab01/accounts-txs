@@ -20,6 +20,8 @@ import { TokenAddress } from '@/types/tokenAddress'
 import { Token } from '@/types/token'
 import { ExternalLinkIcon } from '@radix-ui/react-icons'
 import { TokensTable } from '@/components/table/tokensTable'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 export default function Account() {
   const [toAddress, setToAddress] = useState<string>()
@@ -85,23 +87,25 @@ export default function Account() {
               <p>Type account address to send funds:</p>
               <div className="flex flex-col sm:flex-row">
                 <div className="flex flex-col sm:w-1/2 gap-4">
-                  <input
-                    className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-800"
+                  <Input
+                    className="rounded w-full py-2 px-3 text-white text-md"
                     id="address"
                     type="text"
                     placeholder="0x..."
                     value={toAddress}
                     onChange={(e) => setToAddress(e.target.value)}
-                  ></input>
-                  <input
-                    className="shadow appearance-none rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-800"
+                    autoComplete="off"
+                  />
+                  <Input
+                    className="rounded w-full py-2 px-3 text-white text-md"
                     id="amount"
                     type="number"
                     placeholder="2 ETH"
                     min={0}
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
-                  ></input>
+                    autoComplete="off"
+                  />
                   <div>
                     {toAddress && !isAddress(toAddress) && (
                       <p className="text-sm text-red-700">
@@ -122,7 +126,7 @@ export default function Account() {
                   </div>
                 </div>
                 <div className="flex flex-col sm:w-1/2 gap-4">
-                  <button
+                  <Button
                     className="bg-rose-500 hover:bg-rose-500/70 disabled:bg-rose-500/70 text-white font-bold rounded-full h-10 w-1/2 m-auto"
                     onClick={executeTx}
                     disabled={
@@ -141,7 +145,7 @@ export default function Account() {
                     }
                   >
                     {'SEND'}
-                  </button>
+                  </Button>
                   {isPending && (
                     <p className="text-sm text-green-700 text-center">
                       executing transaction...
