@@ -17,10 +17,9 @@ import shortenAddress from '@/util/shortenAddress'
 import convertToEther from '@/util/convertToEther'
 import getTokens from '@/data/getTokens'
 import { TokenAddress } from '@/types/tokenAddress'
-import { BaseTable } from '@/components/table/table'
-import { columns } from '@/components/table/tokensTable/columns'
 import { Token } from '@/types/token'
 import { ExternalLinkIcon } from '@radix-ui/react-icons'
+import { TokensTable } from '@/components/table/tokensTable'
 
 export default function Account() {
   const [toAddress, setToAddress] = useState<string>()
@@ -181,7 +180,7 @@ export default function Account() {
         </div>
         <Container style="md:w-1/2 sm:my-0 sm:mx-auto">
           <p>Popular tokens:</p>
-          <BaseTable columns={columns} data={tokensList ? tokensList : []} />
+          <TokensTable tokensData={tokensList ? tokensList : []} />
         </Container>
       </div>
     </main>

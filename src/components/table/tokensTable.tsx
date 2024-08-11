@@ -1,5 +1,18 @@
 'use client'
 
+import { Token } from '@/types/token'
+import shortenAddress from '@/util/shortenAddress'
+import {
+  ColumnDef,
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
+import { ExternalLinkIcon } from '@radix-ui/react-icons'
+import Image from 'next/image'
+import { useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -9,79 +22,74 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Transaction } from '@/types/transaction'
-import shortenAddress from '@/util/shortenAddress'
-import { ExternalLinkIcon } from '@radix-ui/react-icons'
-import {
-  ColumnDef,
-  flexRender,
-  getPaginationRowModel,
-  useReactTable,
-} from '@tanstack/react-table'
-import { createColumnHelper, getCoreRowModel } from '@tanstack/table-core'
-import { useMemo } from 'react'
 
-export const TransactionsTable = ({
-  transactionsData,
-}: {
-  transactionsData: Transaction[]
-}) => {
-  const columnHelper = createColumnHelper<Transaction>()
+export const TokensTable = ({ tokensData }: { tokensData: Token[] }) => {
+  const columnHelper = createColumnHelper<Token>()
 
   const columns = useMemo(
     () => [
-      columnHelper.accessor((x) => x.hash, {
-        id: 'hash',
-        header: () => <div className="text-left text-white">Hash</div>,
+      columnHelper.accessor((x) => x.tokenLogo, {
+        id: 'tokenLogo',
+        header: () => <div className="text-left text-white"></div>,
         cell: ({ row }) => {
           return (
-            <div className="text-sm">
-              {shortenAddress(row.getValue('hash'))}
+            <div>
+              <Image
+                width={20}
+                height={20}
+                src={row.getValue('tokenLogo')}
+                alt="token logo"
+              ></Image>
             </div>
           )
         },
       }),
-      columnHelper.accessor((x) => x.amount, {
-        id: 'amount',
-        header: () => <div className="text-left text-white">Amount</div>,
+      columnHelper.accessor((x) => x.tokenName, {
+        id: 'tokenName',
+        header: () => <div className="text-left text-white">Name</div>,
+        cell: ({ row }) => {
+          return <div className="text-sm flex">{row.getValue('tokenName')}</div>
+        },
+      }),
+      columnHelper.accessor((x) => x.tokenSymbol, {
+        id: 'tokenSymbol',
+        header: () => <div className="text-left text-white">Symbol</div>,
+        cell: ({ row }) => {
+          return (
+            <div className="text-sm flex">{row.getValue('tokenSymbol')}</div>
+          )
+        },
+      }),
+      columnHelper.accessor((x) => x.tokenAddress, {
+        id: 'tokenAddress',
+        header: () => <div className="text-left text-white">Token Address</div>,
         cell: ({ row }) => {
           return (
             <div className="text-sm flex">
-              {`${(row.getValue('amount') as string).toLocaleString()} ETH`}
+              {shortenAddress(row.getValue('tokenAddress'))}
             </div>
           )
         },
       }),
-      columnHelper.accessor((x) => x.sender, {
-        id: 'sender',
-        header: () => <div className="text-left text-white">Sender</div>,
+      columnHelper.accessor((x) => x.priceUSD, {
+        id: 'priceUSD',
+        header: () => <div className="text-right text-white">Price (USD)</div>,
         cell: ({ row }) => {
           return (
-            <div className="text-sm">
-              {shortenAddress(row.getValue('sender'))}
+            <div className="text-right text-sm">
+              ${(row.getValue('priceUSD') as Number).toLocaleString()}
             </div>
           )
         },
       }),
-      columnHelper.accessor((x) => x.receiver, {
-        id: 'receiver',
-        header: () => <div className="text-left text-white">Receiver</div>,
-        cell: ({ row }) => {
-          return (
-            <div className="text-sm">
-              {shortenAddress(row.getValue('receiver'))}
-            </div>
-          )
-        },
-      }),
-      columnHelper.accessor((x) => x.blockNumber, {
-        id: 'hash',
-        header: () => <div className="text-right text-white"></div>,
+      columnHelper.accessor((x) => x.tokenAddress, {
+        id: 'tokenLink',
+        header: () => <div></div>,
         cell: ({ row }) => {
           return (
             <div className="flex justify-end text-indigo-500 hover:text-white hover:cursor-pointer">
               <a
-                href={`https://sepolia.etherscan.io/tx/${row.getValue('hash')}`}
+                href={`https://etherscan.io/token/${row.getValue('tokenAddress')}`}
                 target="_blank"
               >
                 <ExternalLinkIcon />
@@ -92,11 +100,11 @@ export const TransactionsTable = ({
       }),
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [transactionsData]
+    [tokensData]
   )
 
   const table = useReactTable({
-    data: transactionsData,
+    data: tokensData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),

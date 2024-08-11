@@ -1,7 +1,7 @@
 'use client'
 
 import { Container } from '@/components/layout/container'
-import { TransactionsTable } from '@/components/table/transactionsTable/transactionsTable'
+import { TransactionsTable } from '@/components/table/transactionsTable'
 import getAccountTransactions from '@/data/getAccountTransactions'
 import { Transaction } from '@/types/transaction'
 import convertToEther from '@/util/convertToEther'
