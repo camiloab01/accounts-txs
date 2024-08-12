@@ -1,5 +1,7 @@
 Coding challenge for [Validation Cloud](https://www.validationcloud.io/).
 
+![App](app.png)
+
 ## Getting Started
 
 First, run the development server:
