@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-zinc-900`}>
         <WagmiProviderComp initialState={initialState}>
-          <div className="h-screen flex flex-col gap-36">
+          <div className="h-screen justify-around flex flex-col gap-10">
             <div className="flex flex-col place-items-center gap-2 bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-600 p-5">
               <Image
                 src="/validationCloud.png"
@@ -38,7 +38,7 @@ export default function RootLayout({
               <p className="text-white text-xl font-semibold">CHALLENGE 🎯</p>
             </div>
             {children}
-            <footer className="flex justify-self-end text-zinc-200 justify-center align-center bg-black w-full p-5 gap-2">
+            <footer className="sm:flex justify-self-end text-zinc-200 justify-center align-center bg-black w-full p-5 gap-2 hidden">
               <p>Developed by Camilo Aguero Botero</p>
               <a
                 href="https://www.linkedin.com/in/camilo-aguero-botero/"

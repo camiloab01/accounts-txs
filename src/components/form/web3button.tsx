@@ -10,7 +10,7 @@ export default function ConnectButton() {
 
   return (
     <button
-      className="bg-blue-600 hover:bg-blue-600/70 text-white font-bold rounded-full p-2"
+      className="bg-blue-600 hover:bg-blue-600/70 text-white font-bold rounded-full w-36"
       onClick={() => open()}
     >
       {isConnected ? shortenAddress(address) : 'Connect Wallet'}
